@@ -23,6 +23,25 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
+a {
+	color: #3D3D3D;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #3D3D3D;
+}
+
+.semibold {
+	font-weight: 600;
+} 
+
+header nav img {
+  width: 19.35px;  
+  height: 19.35px;  
+}
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -192,7 +211,13 @@ margin: auto;
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+} 
+
+#contact p a {
+  text-decoration: underline; 
+  color: #3D3D3D; 
 }
+
 
 input[type="submit"]{
 	font-family: 'Syne';
@@ -209,5 +234,11 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+} 
+
+footer nav li {
+	font-weight: 300;
+	 margin-top: 200px;
+	 margin-right: -30px;
 }
 
