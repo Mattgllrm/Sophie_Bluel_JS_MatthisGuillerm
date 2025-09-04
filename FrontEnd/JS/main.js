@@ -68,4 +68,18 @@ function setFilter (data) {
   div.innerHTML = `${data.name}`;
   document.querySelector(".div-container").append(div); 
 }
- document.querySelector(".tous").addEventListener("click", () => getWorks());
+ document.querySelector(".tous").addEventListener("click", () => getWorks()); 
+
+ // Bandeau Mode Editions 
+
+function displayAdminMode() { 
+  if (sessionStorage.authToken) {
+    const editBanner = document.createElement("div");
+    editBanner.className = "edit";
+    editBanner.innerHTML = '<p><i class="fa-regular fa-pen-to-square"></i> Mode édition</p>';
+    document.body.prepend(editBanner);
+  }
+}
+
+displayAdminMode();
+

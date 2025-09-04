@@ -70,7 +70,8 @@ body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
-	font-size: 14px;
+	font-size: 14px; 
+	margin-top: 60px;
 }
 header {
 	display: flex;
@@ -241,4 +242,28 @@ footer nav li {
 	 margin-top: 200px;
 	 margin-right: -30px;
 }
+
+.error-login {
+	display: flex;
+	background-color: red;
+	color: white;
+	justify-content: center;
+	padding: 5px;
+
+}
+
+.edit {
+	background-color: black;
+	color: white;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+
 
