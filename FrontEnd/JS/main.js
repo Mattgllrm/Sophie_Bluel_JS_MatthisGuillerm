@@ -53,7 +53,7 @@ function setFigureModal(data) {
   // on cible la poubelle
   const trashIcon = figure.querySelector(".trash-icon");
 
-  // au clic → supprimer la figure entière
+  // au clic on supprimer la figure entière
   trashIcon.addEventListener("click", () => {
     figure.remove();
   });

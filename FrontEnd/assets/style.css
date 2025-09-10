@@ -367,17 +367,17 @@ font-size: 18px;
 }
 
 /********************************************************************Trash-can**********************************/
-/* On positionne le conteneur */
+
 .modal-figure {
-  position: relative; /* nécessaire pour que l’icône se cale à l’intérieur */
-  display: inline-block; /* garde la même disposition dans ton grid */
+  position: relative; 
+  display: inline-block; 
 }
 
-/* L’icône poubelle en overlay */
+
 .modal-figure .trash-icon {
   position: absolute;
-  top: 5px;   /* espace du bord haut */
-  right: 5px; /* espace du bord droit */
+  top: 5px;   
+  right: 5px; 
   color: rgb(255, 255, 255);
   background-color: black;
   border-radius: 15%;
