@@ -12,14 +12,36 @@
 	<script src="JS/main.js" defer></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body>
+<body>   
+<!--<aside 
+id="modal1"
+class="modal"
+aria-hidden="true"
+role="dialog"
+aria-labelledby="titlemodal"
+style="display: none"
+>
+
+		<div class="modal-wrapper js-modal-stop">
+			<div class="close-button-container">
+				<button class="js-modal-close">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+           </div>
+			<h3>Galerie photo</h3>
+			<div class="gallery-modal"></div>
+			<hr />
+			<div class="modal-button-container">
+				<button class="add-photo-button">Ajouter une photo</button>
+			</div>
+		</div></aside> -->   
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="#portfolio">projets</a></li>
 			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
+			<li class="login"><a href="login.html">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -37,12 +59,15 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		
+           <h2>Mes Projets</h2>
+		
+		
 		<div class="div-container"> <!--création d'une div pour filtres-->
 			<div class="tous">Tous</div>
 		</div>  
 		 
-		<div class="gallery">
+		<div class="gallery"> 
 			<!-- <figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
 				<figcaption>Abajour Tahina</figcaption>

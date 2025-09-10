@@ -265,5 +265,123 @@ footer nav li {
 	top: 0;
 }
 
+.edit a {
+	color: white;
+}
 
+.edit a:visited {
+	color: white;
+}
+                                                                                 /* Modal */ 
 
+.modal {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	top: 0; 
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-wrapper {
+width: 630px;
+height: 688px;
+max-width: calc(100vh - 20px);
+max-height: calc(100vh - 20px);
+padding: 20px;
+background-color: white; 
+}
+
+.login { 
+	color: #3D3D3D;
+	cursor: pointer;
+}
+
+h3 {
+	text-align: center;
+	font-family: 'Work Sans';
+	font-size: 26px;
+	font-weight: 400;
+	margin: 20px;
+}
+
+hr {
+	margin: 60px auto 10px auto;
+	width: 420px;
+	
+}
+.modal-button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 25px;
+}
+.add-photo-button {
+		border: 1px solid; color: #1D6154;
+		border-radius: 60px;
+		font-family: 'Syne', sans-serif;
+		color: #ffffff;
+		background-color: #1D6154;
+		cursor: pointer;
+		width: 237px;
+		height: 36px;
+		margin-top: 20px;
+} 
+
+.gallery-modal {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 0fr 0fr 0fr 0fr 0fr;
+	margin-left: 100px;
+	gap: 30px 10px;
+	margin-top: 56px;
+}
+
+.gallery-modal img {
+	width: 76.86px;
+	height: 102.57px;
+	cursor: pointer;
+}
+
+.close-button-container {
+	display: flex;
+	justify-content: end; 
+	margin-top: 10px;
+}
+
+.js-modal-close { 
+background-color: white;
+border: none;
+font-weight: bold;
+font-size: 18px;
+} 
+
+.gallery-modal figcaption {
+  display: none;
+}
+
+.fa-xmark {
+	cursor: pointer;
+}
+
+/********************************************************************Trash-can**********************************/
+/* On positionne le conteneur */
+.modal-figure {
+  position: relative; /* nécessaire pour que l’icône se cale à l’intérieur */
+  display: inline-block; /* garde la même disposition dans ton grid */
+}
+
+/* L’icône poubelle en overlay */
+.modal-figure .trash-icon {
+  position: absolute;
+  top: 5px;   /* espace du bord haut */
+  right: 5px; /* espace du bord droit */
+  color: rgb(255, 255, 255);
+  background-color: black;
+  border-radius: 15%;
+  padding: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
