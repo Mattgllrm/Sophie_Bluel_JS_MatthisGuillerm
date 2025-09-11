@@ -32,6 +32,6 @@ if (oldError) {
     let result = await response.json();
     const token = result.token;
     sessionStorage.setItem("authToken", token);
-    window.location.href = "/Portfolio-architecte-sophie-bluel/FrontEnd/index.html";               // rajouté le chemin exact
+    window.location.href = "index.html";           
   }
 }
