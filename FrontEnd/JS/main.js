@@ -49,7 +49,7 @@ function setFigure(data) {
 ///////////////////////////////////////////////////////////
 function setFigureModal(data) {
   const galleryModal = document.querySelector(".gallery-modal");
-  if (!galleryModal) return; // si la modale n'est pas encore créée
+  if (!galleryModal) return;
 
   const figure = document.createElement("figure");
   figure.classList.add("modal-figure");
@@ -60,9 +60,8 @@ function setFigureModal(data) {
     <i class="fa-solid fa-trash-can trash-icon"></i>
   `;
 
-  // Suppression au clic sur la trash-can
   const trashIcon = figure.querySelector(".trash-icon");
-  trashIcon.addEventListener("click", async () => {
+  trashIcon.addEventListener("click", async (event) => {
     await deleteWorks(data.id, figure);
   });
 
@@ -170,6 +169,7 @@ window.addEventListener("keydown", function (e) {
 //               CREATION DE LA MODALE                  //
 ///////////////////////////////////////////////////////////
 function createModal() {
+  // Crée la modale
   const modal = document.createElement("aside");
   modal.id = "modal1";
   modal.className = "modal";
@@ -178,9 +178,17 @@ function createModal() {
   modal.setAttribute("aria-labelledby", "titlemodal");
   modal.style.display = "none";
 
+  // Wrapper principal
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper js-modal-stop";
+  wrapper.style.display = "flex";
+  wrapper.style.flexDirection = "column";
+  wrapper.style.justifyContent = "space-between";
+  wrapper.style.height = "688px"; // ou max-height selon ton CSS
+  wrapper.style.padding = "20px";
+  wrapper.style.backgroundColor = "white";
 
+  // Bouton de fermeture
   const closeContainer = document.createElement("div");
   closeContainer.className = "close-button-container";
 
@@ -191,16 +199,27 @@ function createModal() {
   closeContainer.appendChild(closeButton);
   wrapper.appendChild(closeContainer);
 
+  // Titre
   const title = document.createElement("h3");
   title.textContent = "Galerie photo";
   wrapper.appendChild(title);
 
+  // Galerie
   const galleryModal = document.createElement("div");
   galleryModal.className = "gallery-modal";
+  galleryModal.style.flexGrow = "1";       // prend tout l'espace restant
+  galleryModal.style.overflowY = "auto";   // scroll si trop d'images
   wrapper.appendChild(galleryModal);
 
+  // Footer fixe (hr + bouton)
+  const modalFooter = document.createElement("div");
+  modalFooter.className = "modal-footer";
+  modalFooter.style.display = "flex";
+  modalFooter.style.flexDirection = "column";
+  modalFooter.style.alignItems = "center";
+
   const hr = document.createElement("hr");
-  wrapper.appendChild(hr);
+  modalFooter.appendChild(hr);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.className = "modal-button-container";
@@ -210,16 +229,37 @@ function createModal() {
   addButton.textContent = "Ajouter une photo";
 
   buttonContainer.appendChild(addButton);
-  wrapper.appendChild(buttonContainer);
+  modalFooter.appendChild(buttonContainer);
 
+  wrapper.appendChild(modalFooter);
+
+  // Ajoute le wrapper à la modale
   modal.appendChild(wrapper);
   document.body.appendChild(modal);
 
+  // Gestion ouverture/fermeture
+  addButton.addEventListener("click", () => {
+    document.querySelector("#modal2").style.display = "flex"; // ouvre modale 2
+    document.querySelector("#modal2").setAttribute("aria-hidden", "false");
+  });
+
   closeButton.addEventListener("click", () => {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
+    document.querySelectorAll(".modal").forEach(m => {
+      m.style.display = "none";
+      m.setAttribute("aria-hidden", "true");
+    });
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      document.querySelectorAll(".modal").forEach(m => {
+        m.style.display = "none";
+        m.setAttribute("aria-hidden", "true");
+      });
+    }
   });
 }
+
 
 // crée la modale avant de charger les travaux
 createModal();
@@ -284,5 +324,249 @@ async function deleteWorks(id, figureElement) {
 //         Deuxième Modal                               //
 /////////////////////////////////////////////////////////// 
 
-const addPictureButton = document.querySelector(".add-photo-button")
+function createSecondModal() {
+  const modal = document.createElement("aside");
+  modal.id = "modal2";
+  modal.className = "modal add-photo-modal";
+  modal.setAttribute("aria-hidden", "true");
+  modal.setAttribute("role", "dialog");
+  modal.setAttribute("aria-labelledby", "titlemodal2");
+  modal.style.display = "none";
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "modal-wrapper js-modal-stop";
+
+  // Top buttons
+  const topButtons = document.createElement("div");
+  topButtons.className = "modal-top-buttons";
+
+  const backButton = document.createElement("button");
+  backButton.className = "js-modal-back";
+  backButton.innerHTML = `<i class="fa-solid fa-arrow-left"></i>`;
+
+  const closeButton = document.createElement("button");
+  closeButton.className = "js-modal-close";
+  closeButton.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+
+  topButtons.appendChild(backButton);
+  topButtons.appendChild(closeButton);
+  wrapper.appendChild(topButtons);
+
+  // Title
+  const title = document.createElement("h3");
+  title.textContent = "Ajout photo";
+  wrapper.appendChild(title);
+
+  // =============================
+  // Conteneur bleu clair + input
+  // =============================
+  const fileContainer = document.createElement("div");
+  fileContainer.className = "modal-file-container";
+
+  const fileIcon = document.createElement("div");
+  fileIcon.className = "modal-file-icon";
+  fileIcon.innerHTML = `<i class="fa-regular fa-image"></i>`;
+  fileContainer.appendChild(fileIcon);
+
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.name = "photo";
+  fileInput.id = "photo";
+  fileInput.className = "modal-file-input";
+  fileContainer.appendChild(fileInput);
+
+  const fileLabel = document.createElement("label");
+  fileLabel.setAttribute("for", "photo");
+  fileLabel.className = "modal-file-label";
+  fileLabel.textContent = "+ Ajouter photo";
+  fileContainer.appendChild(fileLabel);
+
+  const fileText = document.createElement("p");
+  fileText.className = "modal-file-text";
+  fileText.textContent = "jpg, png : 4mo max";
+  fileContainer.appendChild(fileText);
+
+  wrapper.appendChild(fileContainer);
+
+  // Formulaire
+  const form = document.createElement("form");
+  form.className = "modal-form";
+  form.action = "#";
+  form.method = "post";
+
+  // Bloc titre
+  const titleBlock = document.createElement("div");
+  const labelTitle = document.createElement("label");
+  labelTitle.setAttribute("for", "title");
+  labelTitle.textContent = "Titre";
+  labelTitle.classList.add("modal-label");
+  const inputTitle = document.createElement("input");
+  inputTitle.type = "text";
+  inputTitle.name = "title";
+  inputTitle.id = "title";
+  titleBlock.appendChild(labelTitle);
+  titleBlock.appendChild(inputTitle);
+  form.appendChild(titleBlock);
+
+
+  // Bloc catégorie avec select
+const categoryBlock = document.createElement("div");
+categoryBlock.className = "modal-form-block"; // applique le même style que les autres blocs
+
+// Label
+const labelCategory = document.createElement("label");
+labelCategory.setAttribute("for", "category");
+labelCategory.textContent = "Catégorie";
+labelCategory.className = "modal-label";
+
+// Select
+const selectCategory = document.createElement("select");
+selectCategory.name = "category";
+selectCategory.id = "category";
+selectCategory.className = "modal-form-input"; 
+
+// Options
+const categories = ["", "Objets", "Appartements", "Hôtel et Restaurants"];
+categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.toLowerCase().replace(/\s+/g, '-'); // objets, appart, hotel et restau
+    option.textContent = cat;
+    selectCategory.appendChild(option);
+});
+
+categoryBlock.appendChild(labelCategory);
+categoryBlock.appendChild(selectCategory);
+form.appendChild(categoryBlock);
+
+wrapper.appendChild(form);
+
+
+  // HR + bouton valider
+  const hr = document.createElement("hr");
+  wrapper.appendChild(hr);
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.className = "modal-button-container";
+  const validateButton = document.createElement("button");
+  validateButton.className = "add-photo-button";
+  validateButton.textContent = "Valider";
+  buttonContainer.appendChild(validateButton);
+  wrapper.appendChild(buttonContainer);
+
+  modal.appendChild(wrapper);
+  document.body.appendChild(modal);
+
+  // =============================
+  // JS ouverture/fermeture
+  // =============================
+  validateButton.addEventListener("click", (e) => {
+    e.preventDefault(); // empêche le submit
+    modal.style.display = "flex";
+    modal.setAttribute("aria-hidden", "false");
+  });
+
+  // CROIX : ferme toutes les modales
+  closeButton.addEventListener("click", () => {
+    document.querySelectorAll(".modal").forEach(m => {
+      m.style.display = "none";
+      m.setAttribute("aria-hidden", "true");
+    });
+  });
+
+  // FLECHE : retourne à la modale 1
+  backButton.addEventListener("click", () => {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    const modal1 = document.getElementById("modal1");
+    if (modal1) {
+      modal1.style.display = "flex";
+      modal1.setAttribute("aria-hidden", "false");
+    }
+  });
+
+  // CLIC SUR FOND : ferme toutes les modales
+  modal.addEventListener("click", e => {
+    if (e.target === modal) {
+      document.querySelectorAll(".modal").forEach(m => {
+        m.style.display = "none";
+        m.setAttribute("aria-hidden", "true");
+      });
+    }
+  });
+}
+
+createSecondModal();
+
+
+
+ // ajout de la preview  
+
+ // Sélection de l'input et du conteneur pour l'image
+const fileInputEl = document.getElementById("photo");
+
+fileInputEl.addEventListener("change", (event) => {
+    const file = event.target.files[0]; // le fichier choisi
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            // Vérifie s'il y a déjà un aperçu et le supprime
+            const existingPreview = document.querySelector(".modal-image-preview");
+            if (existingPreview) existingPreview.remove();
+
+            // Crée l'image
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.className = "modal-image-preview";
+            img.style.maxWidth = "100%";
+            img.style.maxHeight = "180px";
+            img.style.marginTop = "10px";
+
+            // Ajoute l'image dans le conteneur bleu clair
+            const container = document.querySelector(".modal-file-container");
+            container.appendChild(img);
+        };
+
+        reader.readAsDataURL(file); // lit le fichier pour l'afficher
+    }
+});
+
+fileInputEl.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const container = document.querySelector(".modal-file-container");
+
+            // Cacher l'icône, le label et le texte
+            container.querySelectorAll(".modal-file-icon, .modal-file-label, .modal-file-text").forEach(el => {
+                el.style.display = "none";
+            });
+
+            // Supprimer l'ancien preview si présent
+            const existingPreview = container.querySelector(".modal-image-preview");
+            if (existingPreview) existingPreview.remove();
+
+            // Crée l'image preview
+            const img = document.createElement("img");
+            img.src = e.target.result;
+            img.className = "modal-image-preview";
+            img.style.maxWidth = "100%";
+            img.style.maxHeight = "180px";
+            img.style.marginTop = "10px";
+
+            container.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    }
+}); 
+
+
+
+
+
+
+
 
