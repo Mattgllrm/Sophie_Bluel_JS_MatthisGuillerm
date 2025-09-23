@@ -115,7 +115,7 @@ function setFigureModal(data) {
   // Ajout event suppression pour chaque icône trash
   const trashIcon = figure.querySelector(".trash-icon");
   trashIcon.addEventListener("click", async () => {
-    await deleteWork(data.id, figure); // Fonction au singulier
+    await deleteWork(data.id, figure); 
   });
 
   galleryModal.appendChild(figure);
@@ -131,24 +131,31 @@ async function getCategories() {
     if (!response.ok) throw new Error(`Response status: ${response.status}`);
     const json = await response.json();
 
-    // Création des filtres + "Tous"
     const container = document.querySelector(".div-container");
-    container.innerHTML = ""; // reset pour éviter duplication
+    
+    // On affiche les filtres seulement si l'utilisateur n'est pas logué
+    if (!sessionStorage.authToken && container) {
+      container.innerHTML = ""; // reset pour éviter duplication
 
-    const allFilter = document.createElement("div");
-    allFilter.className = "tous";
-    allFilter.textContent = "Tous";
-    allFilter.addEventListener("click", () => getWorks());
-    container.appendChild(allFilter);
+      const allFilter = document.createElement("div");
+      allFilter.className = "tous";
+      allFilter.textContent = "Tous";
+      allFilter.addEventListener("click", () => getWorks());
+      container.appendChild(allFilter);
 
-    json.forEach(cat => {
-      const div = document.createElement("div");
-      div.className = cat.id;
-      div.textContent = cat.name;
-      div.addEventListener("click", () => getWorks(cat.id));
-      container.appendChild(div);
-    });
+      json.forEach(cat => {
+        const div = document.createElement("div");
+        div.className = cat.id;
+        div.textContent = cat.name;
+        div.addEventListener("click", () => getWorks(cat.id));
+        container.appendChild(div);
+      });
+    } else if (container) {
+      // Si logué → on masque div des filtres
+      container.style.display = "none";
+    }
 
+    // retourner les catégories (pour la modal2)
     return json;
   } catch (error) {
     console.error(error.message);
@@ -184,7 +191,7 @@ displayAdminMode();
 ///////////////////////////////////////////////////////////
 //                      MODALE (Open/close)             //
 ///////////////////////////////////////////////////////////
-let modal = null; // modal active
+let modal = null; 
 const focusableSelector = "button, a, input, textarea";
 let focusables = [];
 let previouslyFocusableElement = null;
@@ -589,8 +596,8 @@ function createSecondModal() {
       modal.style.display = "none"; // modal2
       modal.setAttribute("aria-hidden", "true");
       const modal1 = document.getElementById("modal1");
-      modal1.style.display = "none"; // modal1
-      modal1.setAttribute("aria-hidden", "true");
+      modal1.style.display = "flex"; // réafficher
+      modal1.setAttribute("aria-hidden", "false");
 
     } catch (err) {
       console.error(err);
@@ -628,6 +635,9 @@ function createSecondModal() {
 
   // Bouton "Retour" vers modal1
   backButton.addEventListener("click", () => {
+    if (modal.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
     modal.style.display = "none";
     modal.setAttribute("aria-hidden", "true");
     const modal1 = document.getElementById("modal1");
@@ -642,5 +652,5 @@ createSecondModal();
 //         INITIALISATION
 ///////////////////////////////////////////////////////////
 getCategories().then(() => {
-  getWorks(); // affiche tous les travaux au chargement
+  getWorks(); 
 });

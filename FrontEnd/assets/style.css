@@ -442,15 +442,6 @@ background-color: rgba(0, 0, 0, 5%);
 	font-size: 21px;
  }
 
- /*.modal-form-block {
-  display: flex;
-  flex-direction: column;
-  width: 100%; 
-  max-width: 500px; 
-  gap: 10px; 
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-  border: none;
-}*/
 
 .modal-form-input {
     height: 51px;
@@ -594,94 +585,50 @@ background-color: rgba(0, 0, 0, 5%);
 .modal-wrapper {
   display: flex;
   flex-direction: column;
-  max-height: 80vh; /* limite la hauteur de la modale */
+  max-height: 80vh; 
   width: 90%;
   max-width: 600px;
   background: white;
   border-radius: 8px;
-  overflow: hidden; /* empêche le footer de sortir */
+  overflow: hidden;
 }
 
 /* Galerie scrollable */
 .gallery-modal {
-  overflow-y: scroll;  /* permet le scroll vertical */
-  flex-grow: 1;       /* prend tout l'espace disponible au-dessus du footer */
+  overflow-y: scroll;  
+  flex-grow: 1;       
 
 }
 
 /* Footer fixe */
 .modal-footer {
-  flex-shrink: 0;     /* ne rétrécit pas */
+  flex-shrink: 0;     
   padding: 10px;
 }
  
-/*.modal-wrapper {
-    width: 80vw;   /* 80% de la largeur de la fenêtre 
-    max-width: 600px; /* limite max pour grand écran 
-    height: 80vh;  /* 80% de la hauteur de la fenêtre 
-    max-height: 688px; /* limite max 
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}*/
 
 
 
 
-/*.modal-wrapper {
-    width: 80vw;      /* 80% largeur de la fenêtre 
-    height: 80vh;     /* 80% hauteur de la fenêtre 
-    background: white;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* empêche le footer de sortir 
-}*/
 
 /* Galerie scrollable */
 .gallery-modal {
-    overflow-y: auto;   /* scroll si nécessaire */
-    flex-grow: 1;       /* prend tout l'espace disponible */
+    overflow-y: auto;   
+    flex-grow: 1;       
 }
 
 /* Footer fixe */
 .modal-footer {
-    flex-shrink: 0;    /* ne se rétrécit pas */
+    flex-shrink: 0;    
     padding: 10px;
 }
 
 
 
-/*.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* centre la modale exactement
-    width: 630px;   /* largeur Figma *
-    height: 688px;  /* hauteur Figma *
-    max-width: 90vw; 
-    max-height: 90vh;
-    background-color: white;
-    border-radius: 10px; /* Figma *
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    opacity: 1; /* Figma *
-}
-
 .modal-wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}*/
-
-.modal-wrapper {
-    width: 80vw;           /* 80% de la largeur de la fenêtre */
-    max-width: 630px;      /* largeur max */
-    max-height: 90vh;      /* hauteur max responsive */
+    width: 80vw;           
+    max-width: 630px;      
+    max-height: 90vh;      
     background: white;
     border-radius: 8px;
     display: flex;
@@ -689,15 +636,15 @@ background-color: rgba(0, 0, 0, 5%);
     overflow: hidden;
 }
 
-/* Contenu scrollable (galerie ou formulaire) */
+/* Contenu scrollable */
 .modal-content {
-    flex: 1;               /* prend tout l'espace restant */
-    overflow-y: auto;      /* scroll si nécessaire */
+    flex: 1;               
+    overflow-y: auto;     
     padding: 10px;
 }
 
 /* Footer fixe */
 .modal-footer {
-    flex-shrink: 0;        /* reste en bas */
+    flex-shrink: 0;        
     padding: 10px;
 }
