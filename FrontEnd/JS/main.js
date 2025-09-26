@@ -60,29 +60,33 @@ transformHeaderLinks();
 ///////////////////////////////////////////////////////////
 //                  GESTION DES TRAVAUX                 //
 ///////////////////////////////////////////////////////////
-async function getWorks(filter) {
-  // Vider la galerie principale avant affichage
-  document.querySelector(".gallery").innerHTML = "";
+let allWorks = []; // On stock tous les tra. une seule fois
 
+async function getWorks() {
   const url = "http://localhost:5678/api/works";
   try {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Response status: ${response.status}`);
-    const json = await response.json();
-
-    // Filtrage si nécessaire
-    const worksToDisplay = filter ? json.filter(data => data.category.id === filter) : json;
-    worksToDisplay.forEach(data => setFigure(data));
-
-    // Remplir la modale
-    const galleryModal = document.querySelector(".gallery-modal");
-    if (galleryModal) {
-      galleryModal.innerHTML = "";
-      json.forEach(data => setFigureModal(data));
-    }
-
+    allWorks = await response.json();
+    displayWorks(); 
   } catch (error) {
     console.error(error.message);
+  }
+}
+
+// Fonction d’affichage (avec filtrage)
+function displayWorks(filter = null) {
+  const gallery = document.querySelector(".gallery");
+  gallery.innerHTML = "";
+
+  const worksToDisplay = filter ? allWorks.filter(w => w.category.id === filter) : allWorks;
+  worksToDisplay.forEach(data => setFigure(data));
+
+  // remplir la modale
+  const galleryModal = document.querySelector(".gallery-modal");
+  if (galleryModal) {
+    galleryModal.innerHTML = "";
+    allWorks.forEach(data => setFigureModal(data));
   }
 }
 
@@ -112,7 +116,7 @@ function setFigureModal(data) {
     <i class="fa-solid fa-trash-can trash-icon"></i>
   `;
 
-  // Ajout event suppression pour chaque icône trash
+  // Ajout event suppression
   const trashIcon = figure.querySelector(".trash-icon");
   trashIcon.addEventListener("click", async () => {
     await deleteWork(data.id, figure); 
@@ -133,29 +137,25 @@ async function getCategories() {
 
     const container = document.querySelector(".div-container");
     
-    // On affiche les filtres seulement si l'utilisateur n'est pas logué
     if (!sessionStorage.authToken && container) {
-      container.innerHTML = ""; // reset pour éviter duplication
+      container.innerHTML = ""; 
 
       const allFilter = document.createElement("div");
       allFilter.className = "tous";
       allFilter.textContent = "Tous";
-      allFilter.addEventListener("click", () => getWorks());
+      allFilter.addEventListener("click", () => displayWorks());
       container.appendChild(allFilter);
 
       json.forEach(cat => {
         const div = document.createElement("div");
         div.className = cat.id;
         div.textContent = cat.name;
-        div.addEventListener("click", () => getWorks(cat.id));
+        div.addEventListener("click", () => displayWorks(cat.id));
         container.appendChild(div);
       });
     } else if (container) {
-      // Si logué → on masque div des filtres
       container.style.display = "none";
     }
-
-    // retourner les catégories (pour la modal2)
     return json;
   } catch (error) {
     console.error(error.message);
@@ -168,15 +168,12 @@ async function getCategories() {
 ///////////////////////////////////////////////////////////
 function displayAdminMode() { 
   const loginBtn = document.querySelector(".login");
-
   if (sessionStorage.authToken) {
-    // Bandeau Mode édition
     const editBanner = document.createElement("div");
     editBanner.className = "edit";
     editBanner.innerHTML = '<p><a href="#modal1" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> Mode édition</a></p>';
     document.body.prepend(editBanner);
 
-    // Gestion du bouton logout
     if (loginBtn) {
       loginBtn.textContent = "logout";
       loginBtn.addEventListener("click", () => {
